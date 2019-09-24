@@ -1,0 +1,14 @@
+<p>doit afficher le nom de tous les jeux avec un lien cliquable</p><br><br>
+
+<h1>Liste de jeux</h1>
+
+<% @games.each do |game| %>
+<p>
+	<a href="/game/<%= game.id %>">
+		<%= game.name %>	
+	</a>
+
+
+
+</p>
+<% end %>
