@@ -7,8 +7,9 @@ class GamesController < ApplicationController
 
   def show
   	@tags = Tag.all
-  	@a_game = Game.find(params[:id])
   	@a_tag = Tag.find(params[:id])
+
+  	@a_game = Game.find(params[:id])
 
   	@gt = GameTag.first
 
