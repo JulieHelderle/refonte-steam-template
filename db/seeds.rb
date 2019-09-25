@@ -1,53 +1,43 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
-require 'json'
-require 'open-uri'
-require 'nokogiri'
 
-puts 'Deleting previous entries'
 
-Game.destroy_all
+## Données de la table Game
+ 
+ game_list = [
+  [ "Rocket League", "07/07/2015", 19.99, "Football et voitures font bon ménage dans cette suite basée sur les lois de la physique du grand classique tant apprécié, Supersonic Acrobatic Rocket-Powered Battle-Cars !
 
-puts 'Finding best 50 games names'
+Jeu d'action et de sport futuriste, Rocket League® met le joueur aux commandes de véhicules dotés de turbos permettant de foncer dans des ballons pour marquer d'incroyables buts ou de faire des arrêts d'anthologie dans des arènes variées et riches en détails. Grâce à un moteur physique avancé capable de simuler des mouvements réalistes, Rocket League® utilise masse et vitesse pour rendre les commandes intuitives dans cette refonte explosive du football traditionnel.", "Rocket League®", "14/03/2017", "Multijoueurs" ],
+ 
+ [ "Farming Simulator 19", "20/11/2018", 29.99, "Farming Simulator 19 se lance dans la plus grande évolution jamais entreprise par la franchise, avec entre autres le garage le plus complet jamais proposé. Utilisez et conduisez des véhicules et équipements authentiques, provenant des plus grands constructeurs tels que Case IH, New Holland, Challenger, Fendt, Massey Ferguson, Valtra, Krone, Deutz-Fahr et beaucoup d’autres, dont pour la première fois la prestigieuse marque américaine John Deere !
 
-best_games = []
-best_games_html = open('http://www.businessinsider.fr/us/best-video-games-metacritic-2017-11').read
-best_games_search = Nokogiri::HTML(best_games_html)
-best_games_search.search('.slide-title-text').each do |element|
-  best_games << element.text.split("\"")[1]
+Farming Simulator proposera à son lancement deux nouveaux environnements Américain et Européen sur lequel vous développerez votre ferme et profiterez des nombreuses nouvelles activités proposées. Cultivez et moissonnez de nombreux types de grains et plantes dont pour la première fois le coton et l’avoine. Prenez soin de votre élevage – vaches, cochons, moutons, poules – et pour la première fois les chevaux, que vous chevaucherez pour explorer les vastes environnements de jeu. ", "Farming Simulator", "", "Un joueur" ],
+
+]
+
+## Remplissage de la table Game
+
+game_list.each do |name, date_release, price, description, license, last_update, players|
+  Game.create( name: name, date_release: date_release, price: price, description: description, license: license, last_update: last_update, players: players )
 end
+p 'Games OK'
 
-puts 'Creating Games'
+## Données de la table Tag
 
-# getting data from API
+tag_list = ["Indépendant","Action","Aventure","Stratégie","Simulation","RPG","Sport","Course","Casse-tête","Horreur","Humour","Narratif","Sci-Fi","Gestion","Plateforme","Jeu de tir","Survie","Rétro","Tour par tour","Bac à sable","Point&click","Educatif","Rythme","Combat"]
 
-best_games.last(40).each do |game|
-  puts "Creating #{game}"
+## Remplissage de la table Tag
 
-  api_key = '2f6e5965d88deb5064ec6657f3f15a42c9274e70'
-  url = "https://www.giantbomb.com/api/search/?api_key=#{api_key}&format=json&query=#{game}&resources=game"
-  game_serialized = open(url).read
-  new_game = JSON.parse(game_serialized)
-
-  # new_game['results'][0][]
-  Game.create!(
-    name: game,
-    image_url: new_game['results'][0]['image']['super_url'],
-    icon_url: new_game['results'][0]['image']['icon_url'],
-    release_date: "#{new_game['results'][0]['expected_release_day']}/#{new_game['results'][0]['expected_release_month']}/#{new_game['results'][0]['expected_release_year']}",
-    release_year: new_game['results'][0]['expected_release_year']
-  )
+tag_list.each do |name|
+	Tag.create(name: name)
 end
+p 'Tags OK'
 
+## Relier les données entre Game et Tag
 
-
-
-
-
-
-
-
-
-
+gt = GameTag.new()
+gt.game = Game.first
+gt.tag = Tag.find_by_name("Sport")
+gt.save!
 

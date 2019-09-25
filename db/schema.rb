@@ -10,19 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_10_074011) do
+ActiveRecord::Schema.define(version: 2019_09_25_083510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "game_tags", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "tag_id"
+    t.index ["game_id"], name: "index_game_tags_on_game_id"
+    t.index ["tag_id"], name: "index_game_tags_on_tag_id"
+  end
+
   create_table "games", force: :cascade do |t|
     t.string "name"
-    t.integer "price"
-    t.string "video_url"
-    t.string "icon_url"
-    t.string "image_url"
-    t.string "release_date"
-    t.integer "release_year"
+    t.date "date_release"
+    t.float "price"
+    t.text "description"
+    t.string "license"
+    t.date "last_update"
+    t.string "players"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -39,4 +52,6 @@ ActiveRecord::Schema.define(version: 2019_09_10_074011) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "game_tags", "games"
+  add_foreign_key "game_tags", "tags"
 end

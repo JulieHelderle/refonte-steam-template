@@ -1,15 +1,11 @@
-<p>doit afficher le nom d'un seul jeu</p><br><br>
+<p>doit afficher la page pour un seul jeu</p><br><br>
 
 
 
 <!-- DEBUT présentation-->
 <div id="presentation">
 
-	<!-- DEBUT carrousel-->
-	<div id="carrousel">
-		<%= image_tag @a_game.image_url %><br><br>
-	</div>
-	<!-- FIN carrousel-->
+
 
 	<!-- DEBUT infos principales-->
 	<div id="infos_principales">
@@ -29,25 +25,27 @@
 
 		<!-- DEBUT pegi -->
 		<div id="pegi">
-			
+
 		</div>
 		<!-- FIN pegi -->
 
 		<!-- DEBUT tags -->
 		<div id="tags">
-			
+			<ul>	
+				<li><%= @gt.tag.name %></li>
+			</ul>
 		</div>
 		<!-- FIN tags -->
 
 		<!-- DEBUT prix -->
 		<div id="prix">
-			
+			<p><%= @a_game.price %>€</p><br><br>
 		</div>
 		<!-- FIN prix -->
 
 		<!-- DEBUT installer -->
 		<div id="installer">
-			
+			<button><a href="https://store.steampowered.com/?l=french">Installer</a></button><br><br> 	
 		</div>
 		<!-- FIN installer -->
 
@@ -55,6 +53,18 @@
 	</div>
 	<!-- FIN infos principales-->
 
+	<!-- DEBUT date de sortie -->
+		<div id="release_date">
+			<%= @a_game.date_release %><br><br>
+		</div>
+	<!-- FIN date de sortie -->
+
 </div>
 <!-- FIN présentation-->
 
+
+	<!-- DEBUT description -->
+		<div id="release_date">
+			<%= @a_game.description %><br><br>
+		</div>
+	<!-- FIN description -->
