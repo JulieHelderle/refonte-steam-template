@@ -11,7 +11,8 @@ class GamesController < ApplicationController
 
   	@a_game = Game.find(params[:id])
 
-  	@gt = GameTag.first
+	@gt = GameTag.all
+
 
 
   end

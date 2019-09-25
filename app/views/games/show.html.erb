@@ -31,8 +31,10 @@
 
 		<!-- DEBUT tags -->
 		<div id="tags">
-			<ul>	
-				<li><%= @gt.tag.name %></li>
+			<ul>
+			<% @gt.each do |a_gt| %>	
+				<li><%= a_gt.tag.name %></li>
+			<% end %>
 			</ul>
 		</div>
 		<!-- FIN tags -->

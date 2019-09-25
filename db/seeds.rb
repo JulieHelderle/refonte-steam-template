@@ -35,7 +35,7 @@ puts 'Tags OK'
 
 ## Données de la table Developers
 
-# developer_list = ["Psyonix, Inc.","Giants Software","Valve"]
+developer_list = ["Psyonix, Inc.","Giants Software","Valve"]
 
 ## Remplissage de la table Developers
 
@@ -49,11 +49,14 @@ puts 'Tags OK'
 
 # gt = GameTag.new()
 # gt.game = Game.first
-# gt.tag = Tag.find_by_name("Action"), Tag.find_by_name("Sport"), Tag.find_by_name("Course")
+# gt.tag = Tag.find_by_name("Action")
 # #gt.tag = Tag.find_by_name("Action","Sport","Course")
 # gt.save!
 
 GameTag.create!(game: Game.first, tag: Tag.find_by_name("Action"))
+GameTag.create!(game: Game.first, tag: Tag.find_by_name("Sport"))
+GameTag.create!(game: Game.first, tag: Tag.find_by_name("Course"))
+GameTag.create!(game: Game.first, tag: Tag.find_by_name("Humour"))
 puts 'GameTag OK'
 
 
