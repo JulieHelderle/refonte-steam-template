@@ -2,6 +2,7 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
 
+##################################################################
 
 ## Données de la table Game
  
@@ -18,31 +19,22 @@ Farming Simulator proposera à son lancement deux nouveaux environnements Améri
 ## Remplissage de la table Game
 
 game_list.each do |name, date_release, price, description, license, last_update, players|
-  Game.create( name: name, date_release: date_release, price: price, description: description, license: license, last_update: last_update, players: players )
+  Game.create!( name: name, date_release: date_release, price: price, description: description, license: license, last_update: last_update, players: players )
 end
 puts 'Games OK'
 
+##################################################################
+
 ## Données de la table Tag
 
-tag_list = ["Indépendant","Action","Aventure","Stratégie","Simulation","RPG","Sport","Course","Casse-tête","Horreur","Humour","Narratif","Sci-Fi","Gestion","Plateforme","Jeu de tir","Survie","Rétro","Tour par tour","Bac à sable","Point&click","Educatif","Rythme","Combat"]
+tag_list = ["Indépendant","Action","Aventure","Stratégie","Simulation","RPG","Sport","Course","Casse-tête","Horreur","Humour","Narratif","Sci-Fi","Gestion","Plateforme","Jeu de tir","Survie","Réaliste","Rétro","Tour par tour","Bac à sable","Point&click","Educatif","Rythme","Combat"]
 
 ## Remplissage de la table Tag
 
 tag_list.each do |name|
-	Tag.create(name: name)
+	Tag.create!(name: name)
 end
 puts 'Tags OK'
-
-## Données de la table Developers
-
-developer_list = ["Psyonix, Inc.","Giants Software","Valve"]
-
-## Remplissage de la table Developers
-
-# developer_list.each do |name|
-# 	Developer.create(name: name)
-# end
-# puts 'Developers OK'
 
 
 ## Relier les données entre Game et Tag
@@ -50,13 +42,87 @@ developer_list = ["Psyonix, Inc.","Giants Software","Valve"]
 # gt = GameTag.new()
 # gt.game = Game.first
 # gt.tag = Tag.find_by_name("Action")
-# #gt.tag = Tag.find_by_name("Action","Sport","Course")
 # gt.save!
 
+#tags du premier jeu
 GameTag.create!(game: Game.first, tag: Tag.find_by_name("Action"))
 GameTag.create!(game: Game.first, tag: Tag.find_by_name("Sport"))
 GameTag.create!(game: Game.first, tag: Tag.find_by_name("Course"))
 GameTag.create!(game: Game.first, tag: Tag.find_by_name("Humour"))
-puts 'GameTag OK'
 
+#tags du second jeu
+GameTag.create!(game: Game.find(2), tag: Tag.find_by_name("Gestion"))
+GameTag.create!(game: Game.find(2), tag: Tag.find_by_name("Simulation"))
+GameTag.create!(game: Game.find(2), tag: Tag.find_by_name("Réaliste"))
+
+puts 'GameTags OK'
+
+##################################################################
+
+## Données de la table Pegi
+ 
+ pegi_list = [
+  ["PEGI 3", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/2000px-PEGI_3.svg_.png"],
+  ["PEGI 7", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/pegi7.png"],
+  ["PEGI 12", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/PEGI_12.png"],
+  ["PEGI 16", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/pegi16.png"],
+  ["PEGI 18", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/pegi18.png"],
+  ["Langage grossier", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/bad-language.png"],
+  ["Discrimination", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/discrimination.png"],
+  ["Drogues", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/drugs.jpg"],
+  ["Peur", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/PEGI_Fear_annotated.svg_.png"],
+  ["Jeux de hasard", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/PEGI_Gambling_annotated.svg_.png"],
+  ["Sexe", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/sex.png"],
+  ["Violence", "https://pegi.info/sites/default/files/styles/medium/public/2017-03/violence.png"],
+
+]
+
+## Remplissage de la table Pegi
+
+pegi_list.each do |name, imgurl|
+  Pegi.create!(name: name, imgurl: imgurl)
+end
+
+## Relier les données entre Game et Pegi
+
+#pegis du premier jeu
+GamePegi.create!(game: Game.first, pegi: Pegi.find_by_name("PEGI 3"))
+
+#pegis du second jeu
+GamePegi.create!(game: Game.find(2), pegi: Pegi.find_by_name("PEGI 3"))
+GamePegi.create!(game: Game.find(2), pegi: Pegi.find_by_name("Violence"))
+GamePegi.create!(game: Game.find(2), pegi: Pegi.find_by_name("Sexe"))
+
+puts 'PEGIs OK'
+
+##################################################################
+
+## Données de la table Language
+
+# lang_list = ["Français","English","Deutsch","Español","Italiano","Nederlands","Português","Türk","日本の","中国","tiếng việt","русский"]
+
+# ## Remplissage de la table Languages
+
+# lang_list.each do |name|
+# 	Language.create!(name: name)
+# end
+# puts 'Languages OK'
+
+
+# ## Relier les données entre Game et Language
+
+# #Language du premier jeu
+# GameLanguage.create!(game: Game.first, tag: Tag.find_by_name("Action"))
+# GameLanguage.create!(game: Game.first, tag: Tag.find_by_name("Sport"))
+# GameLanguage.create!(game: Game.first, tag: Tag.find_by_name("Course"))
+# GameLanguage.create!(game: Game.first, tag: Tag.find_by_name("Humour"))
+
+# #Language du second jeu
+# GameLanguage.create!(game: Game.find(2), tag: Tag.find_by_name("Gestion"))
+# GameLanguage.create!(game: Game.find(2), tag: Tag.find_by_name("Simulation"))
+# GameLanguage.create!(game: Game.find(2), tag: Tag.find_by_name("Réaliste"))
+
+# puts 'GameLanguage OK'
+
+##################################################################
 

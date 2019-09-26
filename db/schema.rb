@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_25_083510) do
+ActiveRecord::Schema.define(version: 2019_09_26_093852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_pegis", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "pegi_id"
+    t.index ["game_id"], name: "index_game_pegis_on_game_id"
+    t.index ["pegi_id"], name: "index_game_pegis_on_pegi_id"
+  end
 
   create_table "game_tags", force: :cascade do |t|
     t.bigint "game_id"
@@ -30,6 +37,13 @@ ActiveRecord::Schema.define(version: 2019_09_25_083510) do
     t.string "license"
     t.date "last_update"
     t.string "players"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pegis", force: :cascade do |t|
+    t.string "name"
+    t.text "imgurl"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -52,6 +66,8 @@ ActiveRecord::Schema.define(version: 2019_09_25_083510) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "game_pegis", "games"
+  add_foreign_key "game_pegis", "pegis"
   add_foreign_key "game_tags", "games"
   add_foreign_key "game_tags", "tags"
 end

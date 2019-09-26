@@ -25,15 +25,17 @@
 
 		<!-- DEBUT pegi -->
 		<div id="pegi">
-
-		</div>
+			<% @gpegi.each do |gpegi| %>	
+				<%= image_tag(gpegi.pegi.imgurl, width:"100" ,alt: gpegi.pegi.name) %>
+			<% end %>
+		</div><br><br>
 		<!-- FIN pegi -->
 
 		<!-- DEBUT tags -->
 		<div id="tags">
 			<ul>
-			<% @gt.each do |a_gt| %>	
-				<li><%= a_gt.tag.name %></li>
+			<% @gt.each do |gt| %>	
+				<li><%= gt.tag.name %></li>
 			<% end %>
 			</ul>
 		</div>
@@ -57,7 +59,7 @@
 
 	<!-- DEBUT date de sortie -->
 		<div id="release_date">
-			<%= @a_game.date_release %><br><br>
+			<p>Date de sortie : <%= @a_game.date_release %></p><br><br>
 		</div>
 	<!-- FIN date de sortie -->
 
@@ -66,7 +68,7 @@
 
 
 	<!-- DEBUT description -->
-		<div id="release_date">
+		<div id="description">
 			<%= @a_game.description %><br><br>
 		</div>
 	<!-- FIN description -->
