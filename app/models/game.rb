@@ -5,4 +5,6 @@ class Game < ApplicationRecord
 	has_many :game_pegis
 	has_many :pegis, through: :game_pegi
 
+	has_many :dlcs
+
 end

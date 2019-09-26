@@ -126,3 +126,34 @@ puts 'PEGIs OK'
 
 ##################################################################
 
+      # t.string :name
+      # t.string :license
+      # t.date :date_release
+      # t.float :price
+      # t.text :description
+      # t.references :game, foreign_key: true
+
+## Données de la table DLC
+ 
+dlc_list = [
+  [ "The Fate of the Furious™ Ice Charger","Rocket League®", "04/04/2017", 1.99, "Now you can own Dom Toretto's Dodge® Ice Charger from Universal Pictures' explosive movie, The Fate of the Furious. This premium Battle-Car brings a set of exclusive Wheels and six unique Decals along for the ride!","Rocket League"],
+ 
+ ["Platinum Expansion","Farming Simulator", "22/10/2019", 19.99, "Get a wealth of additional vehicles from new brand CLAAS to upgrade your Farming Simulator 19.
+
+The official expansion of Farming Simulator 19 brings a host of fresh content to extend and enrich your game! 
+
+For the first time in franchise history, discover CLAAS, one of the world’s leading farming brands, and its new vehicles allowing you to expand a wide range of activities such as forage harvesting and baling. 
+
+Over 35 faithfully reproduced vehicles and tools from CLAAS join the already huge garage of Farming Simulator 19, including the new LEXION 8900 combine harvester and its unique technology, the JAGUAR 960 TT forage harvester for effective silage, and the powerful XERION 5000 tractor.","Farming Simulator 19"],
+]
+
+## Remplissage de la table Game
+
+dlc_list.each do |name, license, date_release, price, description, game|
+  d = Dlc.new(name: name, license: license, date_release: date_release, price: price, description: description)
+  d.game = Game.find_by_name(game)
+  d.save!
+end
+puts 'DLC OK'
+
+##################################################################      

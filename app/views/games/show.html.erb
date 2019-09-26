@@ -72,3 +72,15 @@
 			<%= @a_game.description %><br><br>
 		</div>
 	<!-- FIN description -->
+
+___________________<br><br>
+
+	<!-- DEBUT DLC -->
+		<div id="DLC">
+			<% @dlc.each do |dlc| %>
+				<p>DLC : <%= dlc.name %> </p> <br>
+				<p><%= dlc.description %></p><br>
+				<p><%= dlc.price %>€</p><br>
+			<% end %>
+		</div>
+	<!-- FIN DLC -->

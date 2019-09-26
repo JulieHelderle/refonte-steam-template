@@ -16,6 +16,9 @@ class GamesController < ApplicationController
 	#accéder à tous les pegis du jeu dont l'ID est dans l'URL
 	@gpegi = GamePegi.where(game: params[:id])
 
+	#accéder à tous les DLC du jeu dont l'ID est dans l'URL
+	@dlc = Dlc.where(game: params[:id])
+
   end
 
 end
