@@ -10,6 +10,16 @@
 	<!-- DEBUT infos principales-->
 	<div id="infos_principales">
 
+		<div id="carrousel">
+			<% @trailer.each do |trailer| %>
+				<%= video_tag(trailer.video, alt: "Video trailer", :controls => true) %><br>
+				<%= image_tag(trailer.img1, alt: "Image 1") %><br>
+				<%= image_tag(trailer.img2, alt: "Image 2") %><br>
+				<%= image_tag(trailer.img3, alt: "Image 3") %><br>
+				<%= image_tag(trailer.img4, alt: "Image 4") %><br>
+			<% end %>
+		</div>
+
 		
 		<!-- DEBUT titre -->
 		<div id="titre">
@@ -48,9 +58,9 @@
 		<!-- FIN prix -->
 
 		<!-- DEBUT installer -->
-		<div id="installer">
-			<button><a href="https://store.steampowered.com/?l=french">Installer</a></button><br><br> 	
-		</div>
+		<div class="btn btn-warning">
+			<a href="https://store.steampowered.com/?l=french">Installer</a> 	
+		</div><br><br>
 		<!-- FIN installer -->
 
 		
@@ -78,9 +88,109 @@ ___________________<br><br>
 	<!-- DEBUT DLC -->
 		<div id="DLC">
 			<% @dlc.each do |dlc| %>
-				<p>DLC : <%= dlc.name %> </p> <br>
+				<h3>DLC : <%= dlc.name %> </h3> <br>
 				<p><%= dlc.description %></p><br>
 				<p><%= dlc.price %>€</p><br>
 			<% end %>
 		</div>
+
+		<div class="btn btn-warning">
+			<a href="https://store.steampowered.com/?l=french">Installer</a> 	
+		</div><br><br>
 	<!-- FIN DLC -->
+
+
+	<!-- DEBUT mods -->
+		<div id="mods">
+			<% @mods.each do |mod| %>
+				<h3>Mod : <%= mod.name %> </h3> <br>
+				<p><%= mod.description %></p><br>
+			<% end %>
+		</div>
+
+		<div class="btn btn-warning">
+			<a href="https://store.steampowered.com/?l=french">Installer</a> 	
+		</div><br><br>
+	<!-- FIN mods -->
+
+___________________<br><br>
+
+	<!-- DEBUT Eval -->
+		<div id="Eval">
+			<% @eval.each do |evaluation| %>
+				<p>Pseudo : <%= evaluation.pseudo %> </p>
+				<p>Note : <%= evaluation.rating %></p>
+				<p>Commentaire : <%= evaluation.comment %></p>
+			<% end %>
+		</div><br><br>
+	<!-- FIN Eval -->
+
+	<!-- DEBUT Vidéos -->
+		<div id="video">
+			<% @video.each do |v| %>
+				<%= link_to image_tag(v.preview, alt: v.title), v.url %><br>
+				<p><%= v.title %> </p>
+			<% end %> 
+		</div>
+	<!-- FIN Vidéos -->
+
+___________________<br><br>
+
+<!-- DEBUT Informations du jeu -->
+	<div id="infos_jeux">	
+
+	<!-- DEBUT Langues -->
+		<div id="mods">	
+				<table class="table table-sm">
+					  <thead>
+					    <tr>
+					      <th scope="col"></th>
+					      <th scope="col">Interface</th>
+					      <th scope="col">Audio</th>
+					      <th scope="col">Sous-titres</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	<% @glang.each do |glang| %>
+					    <tr>
+					      <th scope="row"><%= glang.language.name %></th>
+					      <td><%= glang.interface %></td>
+					      <td><%= glang.audio %></td>
+					      <td><%= glang.subtitle %></td>
+					    </tr>
+					    <% end %>
+					  </tbody>
+				</table>	
+			
+		</div>
+	<!-- FIN Langues -->
+		
+		<!-- DEBUT développeur -->
+		<div id="developer">
+			<p> Développeur : 
+			<% @dev.each do |dev| %>
+				<%= dev.name %>
+			<% end %></p>
+		</div>
+		<!-- FIN développeur -->
+
+		<!-- DEBUT éditeur -->
+		<div id="publisher">
+			<p> Editeur : 
+			<% @publisher.each do |publisher| %>
+				<%= publisher.name %>
+			<% end %></p>
+		</div>
+		<!-- FIN éditeur -->
+
+		<!-- DEBUT date de parution -->
+		<div id="release_date">
+			<p>Date de parution : <%= @a_game.date_release %></p>
+		</div>
+		<!-- FIN date de parution -->
+
+
+	</div>
+	<!-- FIN Informations du jeu -->
+
+

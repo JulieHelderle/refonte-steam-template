@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_132729) do
+ActiveRecord::Schema.define(version: 2019_09_27_004052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "devs", force: :cascade do |t|
+    t.string "name"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_devs_on_game_id"
+  end
 
   create_table "dlcs", force: :cascade do |t|
     t.string "name"
@@ -25,6 +33,26 @@ ActiveRecord::Schema.define(version: 2019_09_26_132729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_dlcs_on_game_id"
+  end
+
+  create_table "evals", force: :cascade do |t|
+    t.string "pseudo"
+    t.integer "rating"
+    t.text "comment"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_evals_on_game_id"
+  end
+
+  create_table "game_languages", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "language_id"
+    t.boolean "interface"
+    t.boolean "audio"
+    t.boolean "subtitle"
+    t.index ["game_id"], name: "index_game_languages_on_game_id"
+    t.index ["language_id"], name: "index_game_languages_on_language_id"
   end
 
   create_table "game_pegis", force: :cascade do |t|
@@ -53,6 +81,23 @@ ActiveRecord::Schema.define(version: 2019_09_26_132729) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "languages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mods", force: :cascade do |t|
+    t.string "name"
+    t.string "license"
+    t.date "date_release"
+    t.text "description"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_mods_on_game_id"
+  end
+
   create_table "pegis", force: :cascade do |t|
     t.string "name"
     t.text "imgurl"
@@ -60,10 +105,30 @@ ActiveRecord::Schema.define(version: 2019_09_26_132729) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "publishers", force: :cascade do |t|
+    t.string "name"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_publishers_on_game_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "trailers", force: :cascade do |t|
+    t.text "video"
+    t.text "img1"
+    t.text "img2"
+    t.text "img3"
+    t.text "img4"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_trailers_on_game_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -78,9 +143,27 @@ ActiveRecord::Schema.define(version: 2019_09_26_132729) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "videos", force: :cascade do |t|
+    t.string "title"
+    t.text "url"
+    t.text "preview"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_videos_on_game_id"
+  end
+
+  add_foreign_key "devs", "games"
   add_foreign_key "dlcs", "games"
+  add_foreign_key "evals", "games"
+  add_foreign_key "game_languages", "games"
+  add_foreign_key "game_languages", "languages"
   add_foreign_key "game_pegis", "games"
   add_foreign_key "game_pegis", "pegis"
   add_foreign_key "game_tags", "games"
   add_foreign_key "game_tags", "tags"
+  add_foreign_key "mods", "games"
+  add_foreign_key "publishers", "games"
+  add_foreign_key "trailers", "games"
+  add_foreign_key "videos", "games"
 end
